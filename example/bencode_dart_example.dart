@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'package:bencode_dart/bencode_dart.dart' as bencode;
 
 void main() {
-  print(String.fromCharCodes(bencode.encode('string'))); // => "6:string"
-  print(String.fromCharCodes(bencode.encode(123))); // => "i123e"
+  print(String.fromCharCodes(bencode.encode('string') as Iterable<int>)); // => "6:string"
+  print(String.fromCharCodes(bencode.encode(123) as Iterable<int>)); // => "i123e"
   print(
-      String.fromCharCodes(bencode.encode(['str', 123]))); // => "l3:stri123ee"
+      String.fromCharCodes(bencode.encode(['str', 123]) as Iterable<int>)); // => "l3:stri123ee"
   print(String.fromCharCodes(
-      bencode.encode({'key': 'value'}))); // => "d3:key5:valuee"
+      bencode.encode({'key': 'value'}) as Iterable<int>)); // => "d3:key5:valuee"
   var map = bencode.decode(Uint8List.fromList('d3:key5:valuee'.codeUnits),
       stringEncoding:
           'utf-8'); // => { key: "value" } , the string value is bytes array

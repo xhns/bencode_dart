@@ -7,10 +7,10 @@ issue_tracker : https://github.com/eclipseglory/bencode_dart/issues
 publish_to: https://pub.dev/
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 #dependencies:
 #  path: ^1.7.0
 
 dev_dependencies:
-  test: ^1.14.4
+  test: ^1.24.0

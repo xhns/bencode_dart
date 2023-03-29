@@ -10,40 +10,40 @@ import 'package:test/test.dart';
 void main() {
   group('Tests for decoding - ', () {
     test('It with a basic value returns the string', () {
-      var code = decode(stringToBytes('10:helloworld'));
+      var code = decode(stringToBytes('10:helloworld') as Uint8List?);
       var str = (code is Uint8List) ? bytesToString(code) : code;
       assert(str == 'helloworld');
     });
 
     test('It with a colon in them returns the correct string', () {
-      var code = decode(stringToBytes('12:0.0.0.0:3000'));
+      var code = decode(stringToBytes('12:0.0.0.0:3000') as Uint8List?);
       var str = (code is Uint8List) ? bytesToString(code) : code;
       assert(str == '0.0.0.0:3000');
     });
 
     test('It is the integer between i and e', () {
-      var code = decode(stringToBytes('i42e'));
+      var code = decode(stringToBytes('i42e') as Uint8List?);
       assert(code == 42);
     });
 
     test('It allows negative numbers', () {
-      var code = decode(stringToBytes('i-42e'));
+      var code = decode(stringToBytes('i-42e') as Uint8List?);
       assert(code == -42);
     });
 
     test('It allows zeros', () {
-      var code = decode(stringToBytes('i0e'));
+      var code = decode(stringToBytes('i0e') as Uint8List?);
       assert(code == 0);
     });
 
     test('It creates a list with strings and integers', () {
-      var re = decode(stringToBytes('l5:helloi42ee'));
+      var re = decode(stringToBytes('l5:helloi42ee') as Uint8List?);
       var c = ['hello', 42];
       assert(myEqauls(re, c));
     });
 
     test('It creates a list with nested lists of strings and integers', () {
-      var re = decode(stringToBytes('l5:helloi42eli-1ei0ei1ei2ei3e4:fouree'));
+      var re = decode(stringToBytes('l5:helloi42eli-1ei0ei1ei2ei3e4:fouree') as Uint8List?);
       var c = [
         'hello',
         42,
@@ -53,7 +53,7 @@ void main() {
     });
 
     test('It has no problem with multiple empty lists or objects', () {
-      var re = decode(stringToBytes('lllleeee'));
+      var re = decode(stringToBytes('lllleeee') as Uint8List?);
       var c = [
         [
           [[]]
@@ -61,7 +61,7 @@ void main() {
       ];
       assert(myEqauls(re, c));
 
-      re = decode(stringToBytes('llelelelleee'));
+      re = decode(stringToBytes('llelelelleee') as Uint8List?);
       var c1 = [
         [],
         [],
@@ -70,13 +70,13 @@ void main() {
       ];
       assert(myEqauls(re, c1));
 
-      re = decode(stringToBytes('ldededee'));
+      re = decode(stringToBytes('ldededee') as Uint8List?);
       var c2 = [{}, {}, {}];
       assert(myEqauls(re, c2));
     });
 
     test('It creates an object with strings and integers', () {
-      var re = decode(stringToBytes('d3:agei100e4:name8:the dudee'));
+      var re = decode(stringToBytes('d3:agei100e4:name8:the dudee') as Uint8List?);
       var c = {'age': 100, 'name': 'the dude'};
       assert(myEqauls(re, c));
     });
@@ -84,7 +84,7 @@ void main() {
     test('It creates an object with nested objects of strings and integers',
         () {
       var re = decode(stringToBytes(
-          'd3:agei100e4:infod5:email13:dude@dude.com6:numberi2488081446ee4:name8:the dudee'));
+          'd3:agei100e4:infod5:email13:dude@dude.com6:numberi2488081446ee4:name8:the dudee') as Uint8List?);
       var c = {
         'age': 100,
         'info': {'email': 'dude@dude.com', 'number': 2488081446},
@@ -94,14 +94,14 @@ void main() {
     });
 
     test('It has no problem with an empty object', () {
-      var re = decode(stringToBytes('de'));
+      var re = decode(stringToBytes('de') as Uint8List?);
       var c = {};
       assert(myEqauls(re, c));
     });
 
     test('It creates an object with a list of objects', () {
       var re = decode(stringToBytes(
-          'd9:locationsld7:address10:484 streeted7:address10:828 streeteee'));
+          'd9:locationsld7:address10:484 streeted7:address10:828 streeteee') as Uint8List?);
       var c = {
         'locations': [
           {'address': '484 street'},
@@ -112,7 +112,7 @@ void main() {
     });
 
     test('It has no problem when there are multiple "e"s in a row', () {
-      var re = decode(stringToBytes('lld9:favoritesleeei500ee'));
+      var re = decode(stringToBytes('lld9:favoritesleeei500ee') as Uint8List?);
       var c = [
         [
           {'favorites': []}
@@ -196,7 +196,7 @@ void main() {
   });
 }
 
-Uint8List stringToBytes(str) {
+List<int> stringToBytes(str) {
   return utf8.encode(str);
 }
 
